@@ -2,19 +2,10 @@ spring:
   application:
     name: config
   profiles:
-    active: git
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://github.com/parmeet20/foodlyst_config_server
-          default-label: main
-          clone-on-start: true
+    active: default
+    
 management:
   endpoints:
     web:
       exposure:
         include: "*"
-
-server:
-  port: 8888
