@@ -1,9 +1,6 @@
 spring:
   application:
     name: config
-  profiles:
-    active: default
-    
 management:
   endpoints:
     web:
