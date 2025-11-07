@@ -1,21 +1,17 @@
 spring:
   application:
     name: ServiceRegistry
-  cloud:
-    discovery:
-      enabled: false   # prevents the Eureka server from acting as a discovery client
-
+    
 eureka:
   instance:
     hostname: eureka-server
   client:
+    hostname: "${HOSTNAME}.eureka"
     register-with-eureka: false   # don't register itself
     fetch-registry: false         # don't fetch registry from peers
     service-url:
-      defaultZone: http://eureka-server:8761/eureka/  # valid in-cluster URL
-  server:
-    enable-self-preservation: false
-    wait-time-in-ms-when-sync-empty: 0
+      defaultZone: ${EUREKA_SERVER_ADDRESS}
+      
 
 management:
   tracing:
