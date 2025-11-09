@@ -6,11 +6,9 @@ eureka:
   instance:
     hostname: eureka-server
   client:
-    hostname: "${HOSTNAME}.eureka"
+    hostname: localhost
     register-with-eureka: false   # don't register itself
     fetch-registry: false         # don't fetch registry from peers
-    service-url:
-      defaultZone: ${EUREKA_SERVER_ADDRESS}
       
 
 management:
