@@ -9,8 +9,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  zipkin:
+    base-url: http://zipkin:9411
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: http://kafka:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -22,7 +24,7 @@ jwt:
 eureka:
   instance:
     prefer-ip-address: true
-    hostname: eureka-0
+    hostname: eureka-server
   client:
     register-with-eureka: true
     fetch-registry: true
