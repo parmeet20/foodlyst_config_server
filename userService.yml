@@ -24,7 +24,7 @@ jwt:
 eureka:
   instance:
     prefer-ip-address: true
-    # hostname: eureka-server
+    hostname: eureka-server
   client:
     register-with-eureka: true
     fetch-registry: true
