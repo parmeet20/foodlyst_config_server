@@ -41,4 +41,4 @@ management:
       probability: 1.0
 
 server:
-  port: ${SERVER_PORT}
+  port: 8081
