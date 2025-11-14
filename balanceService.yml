@@ -1,34 +1,29 @@
 spring:
+  application:
+    name: balanceService
   datasource:
-    url: jdbc:mysql://localhost:3306/balance
+    url: jdbc:mysql://${MYSQL_HOST}:3306/balance
     username: root
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
-
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-
   kafka:
-    bootstrap-servers: localhost:9092
-
+    bootstrap-servers: ${KAFKA_HOST}:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        # We’re not using type headers — just plain JSON body
         spring.json.add.type.headers: false
-
     consumer:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       properties:
         spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
-        # ✅ trust all packages (since multiple services and DTOs are used)
         spring.json.trusted.packages: "*"
-        # ✅ disable type headers (since producer doesn’t add them)
         spring.json.use.type.headers: false
 
 eureka:
@@ -38,11 +33,12 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://${EUREKA_URL}:8761/eureka/
 
 management:
   tracing:
     sampling:
       probability: 1.0
+
 server:
-  port: 8081
+  port: ${SERVER_PORT}
