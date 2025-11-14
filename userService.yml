@@ -2,7 +2,7 @@ spring:
   application:
     name: userService
   datasource:
-    url: jdbc:mysql://mysql:3306/user
+    url: jdbc:mysql://localhost:3306/user
     username: root
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -10,9 +10,9 @@ spring:
     hibernate:
       ddl-auto: update
   zipkin:
-    base-url: http://zipkin:9411
+    base-url: http://localhost:9411
   kafka:
-    bootstrap-servers: kafka:9092
+    bootstrap-servers: localhost:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -29,7 +29,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://eureka-server:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
 
 feign:
   discovery:
