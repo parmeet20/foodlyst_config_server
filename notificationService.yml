@@ -11,6 +11,7 @@ spring:
           starttls:
             enable: true
   kafka:
+    bootstrap-servers: ${KAFKA_HOST}:9092
     consumer:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
