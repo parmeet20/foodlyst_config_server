@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/rating
+    url: jdbc:mysql://${MYSQL_HOST}:3306/rating
     username: root
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -9,7 +9,7 @@ spring:
       ddl-auto: update
     show-sql: true
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_HOST}:9092
 
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -21,7 +21,8 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://${EUREKA_URL}:8761/eureka/
+
 management:
   tracing:
     sampling:
