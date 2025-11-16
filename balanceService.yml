@@ -11,20 +11,11 @@ spring:
       ddl-auto: update
     show-sql: true
   kafka:
-    bootstrap-servers: http://${KAFKA_HOST}:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      properties:
-        spring.json.add.type.headers: false
-    consumer:
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-      properties:
-        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
-        spring.json.trusted.packages: "*"
-        spring.json.use.type.headers: false
+    bootstrap-servers: ${KAFKA_HOST}:9092
+
+  zipkin:  # ADDED Zipkin configuration
+    base-url: http://${ZIPKIN_HOST}:9411
+    enabled: true
 
 eureka:
   instance:
@@ -39,6 +30,9 @@ management:
   tracing:
     sampling:
       probability: 1.0
-
+  endpoints:
+    web:
+      exposure:
+        include: "*" 
 server:
   port: 8081
