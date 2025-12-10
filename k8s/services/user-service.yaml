@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: foodlyst-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: param9999/user-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8079
+          env:
+
+            # =========================
+            # CONFIG SERVER
+            # =========================
+            - name: CONFIG_SERVER_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: config-service-secret
+                  key: CONFIG_SERVER_HOST
+
+            # =========================
+            # MYSQL CONFIG (manual)
+            # =========================
+            - name: MYSQL_HOST
+              value: "mysqlv1.mysql.svc.cluster.local"
+            - name: MYSQL_USER
+              value: "mysql"
+            - name: MYSQL_PASSWORD
+              value: "N2ql7MzBdU"
+
+            # =========================
+            # EUREKA
+            # =========================
+            - name: EUREKA_URL
+              value: "eureka-server"
+
+            - name: KAFKA_HOST
+              value: "kafka-external"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: foodlyst-microservice
+spec:
+  selector:
+    app: user-service
+  ports:
+    - port: 8079
+      targetPort: 8079
+  type: NodePort

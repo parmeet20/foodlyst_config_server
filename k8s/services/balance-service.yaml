@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: balance-service
+  namespace: foodlyst-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: balance-service
+  template:
+    metadata:
+      labels:
+        app: balance-service
+    spec:
+      containers:
+        - name: balance-service
+          image: param9999/balance-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081
+          env:
+
+            # =========================
+            # CONFIG SERVER
+            # =========================
+            - name: CONFIG_SERVER_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: config-service-secret
+                  key: CONFIG_SERVER_HOST
+
+            # =========================
+            # MYSQL CONFIG (manual)
+            # =========================
+            - name: MYSQL_HOST
+              value: "mysql"
+            - name: MYSQL_USER
+              value: "root"
+            - name: MYSQL_PASSWORD
+              value: "password"
+
+            # =========================
+            # EUREKA
+            # =========================
+            - name: EUREKA_URL
+              value: "eureka-server"
+            - name: KAFKA_HOST
+              value: "kafka-external"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: balance-service
+  namespace: foodlyst-microservice
+spec:
+  selector:
+    app: balance-service
+  ports:
+    - port: 8081
+      targetPort: 8081
+  type: NodePort
