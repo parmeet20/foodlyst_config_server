@@ -20,6 +20,11 @@ spec:
           ports:
             - containerPort: 8081
           env:
+            # =========================
+            # SERVER PORT (IMPORTANT)
+            # =========================
+            - name: SERVER_PORT
+              value: "8081"
 
             # =========================
             # CONFIG SERVER
@@ -31,22 +36,31 @@ spec:
                   key: CONFIG_SERVER_HOST
 
             # =========================
-            # MYSQL CONFIG (manual)
+            # MYSQL CONFIG
             # =========================
             - name: MYSQL_HOST
               value: "mysql"
+            - name: MYSQL_PORT
+              value: "3306"
+            - name: MYSQL_DATABASE
+              value: "balance"
             - name: MYSQL_USER
               value: "root"
             - name: MYSQL_PASSWORD
-              value: "password"
+              value: "rootpassword"
 
             # =========================
             # EUREKA
             # =========================
             - name: EUREKA_URL
               value: "eureka-server"
+
+            # =========================
+            # KAFKA
+            # =========================
             - name: KAFKA_HOST
               value: "kafka-external"
+
 ---
 apiVersion: v1
 kind: Service

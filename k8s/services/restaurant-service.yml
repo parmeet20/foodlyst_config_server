@@ -2,21 +2,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-service
+  name: restaurant-service
   namespace: foodlyst-microservice
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: user-service
+      app: restaurant-service
   template:
     metadata:
       labels:
-        app: user-service
+        app: restaurant-service
     spec:
       containers:
-        - name: user-service
-          image: param9999/user-service:latest
+        - name: restaurant-service
+          image: param9999/restaurant-service:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8079
@@ -38,11 +38,11 @@ spec:
             - name: MYSQL_PORT
               value: "3306"
             - name: MYSQL_DATABASE
-              value: "user"
+              value: "restaurant"
             - name: MYSQL_USER
-              value: "mysql"
+              value: "root"
             - name: MYSQL_PASSWORD
-              value: "password"
+              value: "rootpassword"
 
             # =========================
             # EUREKA
@@ -50,20 +50,15 @@ spec:
             - name: EUREKA_URL
               value: "eureka-server"
 
-            # =========================
-            # KAFKA
-            # =========================
-            - name: KAFKA_HOST
-              value: "kafka"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: user-service
+  name: restaurant-service
   namespace: foodlyst-microservice
 spec:
   selector:
-    app: user-service
+    app: restaurant-service
   ports:
     - port: 8079
       targetPort: 8079
