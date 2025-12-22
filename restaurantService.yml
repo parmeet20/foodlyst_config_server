@@ -1,13 +1,18 @@
 spring:
+  application:
+    name: restaurant-service
+
   datasource:
-    url: jdbc:mysql://localhost:3306/restaurants
-    username: root
-    password: password
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:restaurants}
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:password}
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+
 eureka:
   instance:
     prefer-ip-address: true
@@ -15,13 +20,16 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://${EUREKA_URL:localhost}:8761/eureka
+
 feign:
   discovery:
     enabled: true
+
 management:
   tracing:
     sampling:
       probability: 1.0
+
 server:
   port: 8083
